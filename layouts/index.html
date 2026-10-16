@@ -1,0 +1,52 @@
+{{ define "main" }}
+<section class="hero" id="hero">
+  <div class="hero-photo" style="background-image:url('{{ .Params.hero_image | absURL }}');"></div>
+  <div class="wrap">
+    <div class="hero-content">
+      <p class="eyebrow">{{ .Params.eyebrow }}</p>
+      <h1>{{ .Params.headline }}</h1>
+      <p class="lede">{{ .Params.lede }}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="{{ .Params.cta_primary_url | relURL }}">{{ .Params.cta_primary_text }}</a>
+        <a class="btn btn-ghost" href="{{ .Params.cta_secondary_url | relURL }}">{{ .Params.cta_secondary_text }}</a>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"><span></span></div>
+  </div>
+</section>
+
+<section data-fade>
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Research areas</h2>
+      <a href="{{ "/research/" | relURL }}" class="eyebrow">All research →</a>
+    </div>
+    <div class="grid">
+      {{ range (where .Site.RegularPages "Section" "research").ByWeight }}
+      <div class="card">
+        {{ partial "lattice.html" (dict "variant" .Params.icon) }}
+        <h3>{{ .Title }}</h3>
+        <p>{{ .Params.summary }}</p>
+        <a class="card-link" href="{{ .RelPermalink }}">Read more →</a>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="lattice-divider" aria-hidden="true"></div></div>
+
+<section data-fade>
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Recent news</h2>
+      <a href="{{ "/news/" | relURL }}" class="eyebrow">All news →</a>
+    </div>
+    <ul class="news-list">
+      {{ range first 3 (where site.RegularPages "Section" "news").ByDate.Reverse }}
+      {{ partial "news-li.html" (dict "page" . "summary" false) }}
+      {{ end }}
+    </ul>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,48 @@
+baseURL = "https://mccormacklab.mse.berkeley.edu/"
+locale = "en-us"
+title = "McCormack Lab"
+enableRobotsTXT = true
+removePathAccents = true
+
+[taxonomies]
+
+[params]
+  description = "Research group in the Department of Materials Science & Engineering at UC Berkeley."
+  brandLine = "McCormack Lab"
+  scholarUrl = "https://scholar.google.com/citations?user=TYvlgvoAAAAJ&hl=en"
+  contactEmail = "sjmccorm@berkeley.edu"
+
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  name = "Research"
+  url = "/research/"
+  weight = 2
+
+[[menu.main]]
+  name = "Equipment"
+  url = "/equipment/"
+  weight = 3
+
+[[menu.main]]
+  name = "People"
+  url = "/people/"
+  weight = 4
+
+[[menu.main]]
+  name = "Publications"
+  url = "/publications/"
+  weight = 5
+
+[[menu.main]]
+  name = "News"
+  url = "/news/"
+  weight = 6
+
+[[menu.main]]
+  name = "Contact"
+  url = "/contact/"
+  weight = 7

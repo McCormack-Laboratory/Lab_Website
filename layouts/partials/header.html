@@ -1,0 +1,26 @@
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="{{ "/" | relURL }}">
+      {{ .Site.Params.brandLine }}
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+    <nav class="nav" id="site-nav">
+      {{ $current := .RelPermalink }}
+      {{ range .Site.Menus.main }}
+        {{ $menuURL := .URL | relLangURL }}
+        <a href="{{ .URL | relURL }}"{{ if eq $current $menuURL }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+    </nav>
+  </div>
+</header>
+<script>
+(function () {
+  var toggle = document.querySelector(".nav-toggle");
+  var nav = document.querySelector(".nav");
+  if (!toggle || !nav) return;
+  toggle.addEventListener("click", function () {
+    var open = nav.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+})();
+</script>

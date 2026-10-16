@@ -1,0 +1,15 @@
+{{ define "main" }}
+<section style="padding-top:3.5rem;">
+  <div class="wrap">
+    <p class="eyebrow"><a href="{{ "/news/" | relURL }}">&larr; News</a></p>
+
+    <article class="article">
+      <p class="article-date">{{ .Params.date_label | default (.Date | time.Format "January 2, 2006") }}</p>
+      <h1 style="font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom:0.8rem;">{{ .Title }}</h1>
+      {{ with .Params.summary }}<p class="lede">{{ . }}</p>{{ end }}
+      <div class="article-body">{{ .Content }}</div>
+      {{ with .Params.link }}<p class="article-link"><a href="{{ . }}" target="_blank" rel="noopener">Read more &nearr;</a></p>{{ end }}
+    </article>
+  </div>
+</section>
+{{ end }}

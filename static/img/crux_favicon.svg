@@ -1,0 +1,11 @@
+<svg width="256" height="256" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#b18202" stroke-width="3" fill="#b18202" transform="rotate(-90 32 32)">
+    <line x1="32" y1="7" x2="27" y2="57"/>
+    <line x1="10" y1="26" x2="54" y2="33"/>
+    <circle cx="32" cy="7" r="5.5"/>
+    <circle cx="27" cy="57" r="5.5"/>
+    <circle cx="10" cy="26" r="5.5"/>
+    <circle cx="54" cy="33" r="5.5"/>
+  </g>
+  <circle cx="40" cy="48" r="3.2" fill="#b18202"/>
+</svg>

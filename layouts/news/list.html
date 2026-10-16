@@ -1,0 +1,20 @@
+{{ define "main" }}
+{{/* Each news item is a markdown file in content/news/, newest first. */}}
+<section style="padding-top:3.5rem; padding-bottom: 2rem;">
+  <div class="wrap">
+    <p class="eyebrow">News</p>
+    <h1 style="font-size: clamp(2rem, 4vw, 2.8rem);">{{ .Title }}</h1>
+    <p class="lede">{{ .Params.lede }}</p>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    {{ range .Pages.GroupByDate "2006" "desc" }}
+      <h2 class="pub-year">{{ .Key }}</h2>
+      <ul class="news-list">
+        {{ range .Pages }}{{ partial "news-li.html" (dict "page" . "summary" true) }}{{ end }}
+      </ul>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

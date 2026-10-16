@@ -1,0 +1,32 @@
+[
+  {
+    "year": "2026",
+    "authors": "Last, F.; Last, F.; Last, F.",
+    "title": "Paper title goes here in full.",
+    "venue": "Journal Name, vol(issue), pages (2026)."
+  },
+  {
+    "year": "2026",
+    "authors": "Last, F.; Last, F.",
+    "title": "Another paper title.",
+    "venue": "Journal Name, vol(issue), pages (2026)."
+  },
+  {
+    "year": "2025",
+    "authors": "Last, F.; Last, F.; Last, F.",
+    "title": "Paper title goes here in full.",
+    "venue": "Journal Name, vol(issue), pages (2025)."
+  },
+  {
+    "year": "2025",
+    "authors": "Last, F.",
+    "title": "Another paper title.",
+    "venue": "Journal Name, vol(issue), pages (2025)."
+  },
+  {
+    "year": "2025",
+    "authors": "Last, F.; Last, F.",
+    "title": "A third paper title.",
+    "venue": "Journal Name, vol(issue), pages (2025)."
+  }
+]

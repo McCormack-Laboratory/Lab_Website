@@ -1,0 +1,162 @@
+{
+  "pi": {
+    "initials": "SM",
+    "name": "Prof. Scott J. McCormack",
+    "title": "Associate Professor, Department of Materials Science & Engineering, UCB; Joint Faculty, Materials Science Division, Lawrence Berkeley National Laboratory; Materials Faculty Scientist, Materials Science Division, Lawrence Berkeley National Laboratory",
+    "bio": "Scott grew up in the small fishing village of Eden on the Far South Coast of Australia. He completed a Bachelors of Engineering with First Class Honors (H1), majoring in Materials Engineering at the University of Wollongong, Australia in 2013. He then completed his Ph.D. in Materials Science and Engineering from the University of Illinois at Urbana-Champaign, USA in 2019. He is now an Assistant Professor of Materials Science and Engineering at the University of California Davis. His research focuses on the interplay of crystal symmetry and energetics of materials in extreme environments for applications in space exploration.",
+    "office": "381 Hearst Memorial Mining Building",
+    "email": "sjmccorm@berkeley.edu",
+    "orcid": "0000-0002-0715-3451",
+    "scholar": "https://scholar.google.com/citations?user=XXXX",
+    "linkedin": "https://www.linkedin.com/in/scottjmccormack/",
+    "slug": "scott-mccormack",
+    "photo": "scott-mccormack.jpeg"
+  },
+  "members": [
+    {
+      "initials": "AB",
+      "name": "Adam Carlton",
+      "role": "Graduate Student | UCD-LLNL - Materials Science and Engineering",
+      "focus": "",
+      "degree": "B.S. (2020) Chemistry, UC Santa Cruz.",
+      "bio": "Adam is from Lodi, California and received his Bachelor of Science in chemistry from the University of California Santa Cruz. As an undergraduate researcher, he studied vaccine spike proteins and metal-oxides for photo-anodes. After graduating he was hired at Lawrence Livermore National Laboratory for projects pertaining to nanoparticle synthesis, colloid formulation, microencapsulation, resin formulation and 3D printing, upcycling of polymers and synthesis of polymeric multi-materials. In his free time, he enjoys all board sports, disc golfing, traveling, and learning new skills.",
+      "email": "ajcarleton@ucdavis.edu",
+      "orcid": "0000-0002-4649-9041",
+      "linkedin": "https://www.linkedin.com/in/adam-carleton-46a614b5/",
+      "slug": "adam-carlton",
+      "photo": "adam-carlton.jpg"
+    },
+    {
+      "initials": "JC",
+      "name": "Jonah Carmichael",
+      "role": "Graduate Student | UCD-Sandia - Materials Science and Engineering",
+      "focus": "",
+      "degree": "B.S. (2018) Materials Science and Engineering, Clemson University.",
+      "bio": "Jonah is from Greensboro, North Carolina. He earned his Bachelor of Science in Materials Science and Engineering from Clemson University in 2018. Since then he has worked as a research technologist at Sandia National Laboratories, with a focus on mechanical testing of brittle materials. In his free time, he enjoys hiking, skiing, reading, and pampering his fluffy cat.",
+      "email": "jecarmichael@ucdavis.edu",
+      "orcid": "0000-0001-6607-5556",
+      "linkedin": "https://www.linkedin.com/in/jonah-carmichael-675609b0/",
+      "slug": "jonah-carmichael",
+      "photo": "jonah-carmichael.jpg"
+    },
+    {
+      "initials": "DC",
+      "name": "Derek Culberston",
+      "role": "Graduate Student | UCD-LLNL - Materials Science and Engineering",
+      "focus": "",
+      "degree": "B.S. (2023) Chemical Engineering, Colorado School of Mines.",
+      "bio": "Derek is from Northbrook, Illinois and received his Bachelor’s degree in Chemical Engineering from the Colorado School of Mines, where he researched molecular thermodynamics using MD simulations. Before university, Derek worked on high throughput supercritical CO2 separation technology. After graduating, he started at Lawrence Livermore National Laboratory in the Tritium Operations group. Derek’s research focuses on metal hydride physics and processing.",
+      "email": "culbertson4@llnl.gov",
+      "orcid": "0009-0002-2139-8866",
+      "linkedin": "https://www.linkedin.com/in/derekcul/",
+      "slug": "derek-culbertson",
+      "photo": "derek-culbertson.jpg"
+    },
+    {
+      "initials": "BE",
+      "name": "Bryce Everson",
+      "role": "Graduate Student | UCB - Materials Science and Engineering",
+      "focus": "local structure of actinides at ultra-high temperatures",
+      "degree": "B.S. (2023) Materials Science and Engineering, University of Minnesota.",
+      "bio": "Bryce is from Bismarck, North Dakota and received a Bachelor of Science in Materials Science and Engineering, and a minor in chemistry from the University of Minnesota. His undergraduate research involved studying the temperature dependence of strain rate sensitivity in alloys for nuclear applications. He did additional research at Carestream investigating the physical properties of photothermal film at high humidity and temperatures. In his free time he enjoys martial arts, rock climbing, and hanging out with his cat Scout.",
+      "email": "bryce_everson@berkeley.edu",
+      "orcid": "0009-0007-5609-2062",
+      "linkedin": "https://www.linkedin.com/in/bryce-everson-179a672a0/",
+      "slug": "bryce-everson",
+      "photo": "bryce-everson.jpeg"
+    },
+    {
+      "initials": "SH",
+      "name": "Sean Hickingbottom",
+      "role": "Graduate Student | UCD-LLNL - Materials Science and Engineering",
+      "focus": "",
+      "degree": "B.S. (2020) Chemistry, Brigham Young University - Idaho.",
+      "bio": "",
+      "email": "shickingbottom@ucdavis.edu",
+      "linkedin": "https://www.linkedin.com/in/seanhickingbottom/",
+      "slug": "sean-hickingbottom",
+      "photo": ""
+    }, 
+    {
+      "initials": "TM",
+      "name": "Toshio Marr",
+      "role": "Graduate Student | UCB - Materials Science and Engineering",
+      "focus": "",
+      "degree": "M.S. (2024), B.S. (2023) Chemical Engineering, Colorado School of Mines",
+      "bio": "Toshio lives with his dog.",
+      "email": "toshio_marr@berkeley.edu",
+      "orcid": "0009-0003-7209-0930",
+      "gscholar": "",
+      "linkedin": "https://www.linkedin.com/in/toshio-marr-a91239268/",
+      "slug": "toshio-marr",
+      "photo": "toshio-marr.jpg"
+    }, 
+    {
+      "initials": "RM",
+      "name": "Ryan McGinnis",
+      "role": "Graduate Student | UCB - Materials Science and Engineering",
+      "focus": "Carbides at ultra-high temperatures",
+      "degree": "B.S. (2025) Metallurgical and Materials Engineering, Colorado School of Mines.",
+      "bio": "Ryan is from Northeast Ohio and earned his Bachelor's of Science in Metallurgical and Materials Engineering from the Colorado School of Mines. He joined the McCormack Lab in 2026 to work on carbide structures at ultra-high temperatures. When not in lab, Ryan enjoys skiing, painting, and baking. \n\n Awards: NSF Graduate Research Fellowship",
+      "email": "rmcginnis@berkeley.edu",
+      "orcid": "0009-0002-3125-0646",
+      "gscholar": "https://scholar.google.com/citations?user=6YPD0iMAAAAJ",
+      "linkedin": "https://www.linkedin.com/in/rtmcginnis/",
+      "slug": "ryan-mcginnis",
+      "photo": "ryan-mcginnis.jpg"
+      
+    },
+
+    {
+      "initials": "NO",
+      "name": "Nicole O'Shea",
+      "role": "PhD Candidate | UCD & LLNL - Materials Science and Engineering",
+      "focus": "Thermochemistry of ultra-high temperature refractory metal alloys",
+      "degree": "B.S. (2012) English, University of Wisconsin-River Falls",
+      "bio": "\n\n Awards: UC-National Lab In-Residence Graduate Fellowship",
+      "email": "nmoshea@ucdavis.edu",
+      "orcid": "0000-0001-9314-6065",
+      "gscholar": "https://scholar.google.com/citations?user=PBAVgf4AAAAJ",
+      "linkedin": "https://www.linkedin.com/in/nmoshea/",
+      "slug": "nicki-oshea",
+      "photo": "nicki-oshea.jpg"
+    },
+    {
+      "initials": "SS",
+      "name": "Samir Sarma",
+      "role": "Graduate Student | UCB - Materials Science and Engineering",
+      "focus": "Aerospace materials and high-temperature ceramics",
+      "degree": "B.S. (2026) Materials Science and Engineering, Georgia Institute of Technology.",
+      "bio": "Samir Sarma (he/him) is a 1st year PhD student. His research interests concern studying the crystallography and phase behavior of ceramics for use in thermal insulation in spacecraft. He received his B.S. in Materials Science and Engineering at the Georgia Institute of Technology. He enjoys trivia, going to museums, and practicing street dance styles such as hip-hop.",
+      "email": "samir.sarma@berkeley.edu",
+      "orcid": "0009-0008-6447-7584",
+      "gscholar": "",
+      "linkedin": "https://www.linkedin.com/in/samir-sarma/",
+      "slug": "samir-sarma",
+      "photo": "samir-sarma.jpg"
+    },
+    {
+      "initials": "RS",
+      "name": "Randi Swanson",
+      "role": "PhD Candidate | UCD - Chemical Engineering",
+      "focus": "Quantification of structural features of ZrB2 including defects and grain characteristics",
+      "degree": "B.S. (2021) Chemical Engineering, University of South Alabama.",
+      "bio": "Randi is from Huntsville, Alabama. She earned her Bachelor’s degree in Chemical Engineering from the University of South Alabama. Randi enjoys playing piano, going to concerts, and playing soccer. Her research focuses on characterization and calorimetry of ceramics at high temperatures for next generation re-entry vehicles.",
+      "email": "rkswanson@ucdavis.edu",
+      "orcid": "0000-0002-7641-407X",
+      "gscholar": "https://scholar.google.com/citations?user=eLlTx6gAAAAJ",
+      "linkedin": "https://www.linkedin.com/in/randi-swanson-b62176202/",
+      "slug": "randi-swanson",
+      "photo": "randi-swanson.jpg"
+    }
+  ],
+  "alumni": [
+    "Fox Thorpe — PhD (2024) → Calcentra, Inc.",
+    "Stuart Ness — PhD (2025) → Coorstek",
+    "William Rosenberg — PhD (2026) → NASA Ames Research Center"
+  ],
+  "openings": {
+    "text": "We're looking for PhD students for Fall 2027 and Postdocs with flexible start dates for all research areaas. Please email Prof. McCormack with CV and note about research interest and fit if interested. Prospective students can also reach out to current students to learn more. ",
+    "email": "sjmccorm@berkeley.edu"
+  }
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit content — [Lastname] Group</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { max-width: 880px; margin: 0 auto; padding: 2.5rem var(--gutter) 6rem; }
+  .admin-tabs { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--line); margin-bottom: 2rem; }
+  .admin-tab {
+    font-family: var(--font-mono); font-size: 0.85rem; padding: 0.75rem 1.1rem;
+    background: none; border: none; cursor: pointer; color: var(--ink-soft);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .admin-tab.active { color: var(--ink); border-bottom-color: var(--accent); }
+  .admin-panel { display: none; }
+  .admin-panel.active { display: block; }
+  .entry {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 1.25rem; margin-bottom: 1rem; background: var(--paper-raised);
+  }
+  .field { margin-bottom: 0.9rem; }
+  .field label {
+    display: block; font-family: var(--font-mono); font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint);
+    margin-bottom: 0.3rem;
+  }
+  .field input, .field textarea {
+    width: 100%; font-family: var(--font-body); font-size: 0.95rem;
+    padding: 0.55rem 0.7rem; border: 1px solid var(--line-strong);
+    border-radius: var(--radius); background: var(--paper); color: var(--ink);
+  }
+  .field textarea { min-height: 4.5rem; resize: vertical; }
+  .field input:focus, .field textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .row-actions { display: flex; justify-content: flex-end; }
+  .btn-small {
+    font-family: var(--font-mono); font-size: 0.78rem; padding: 0.4rem 0.8rem;
+    border: 1px solid var(--line-strong); border-radius: var(--radius);
+    background: none; cursor: pointer; color: var(--ink-soft);
+  }
+  .btn-small:hover { border-color: var(--ink); color: var(--ink); }
+  .add-btn {
+    font-family: var(--font-mono); font-size: 0.85rem; padding: 0.7rem 1.1rem;
+    border: 1px dashed var(--line-strong); border-radius: var(--radius);
+    background: none; cursor: pointer; color: var(--ink-soft); width: 100%; margin-bottom: 1.5rem;
+  }
+  .add-btn:hover { border-color: var(--accent); color: var(--accent-ink); }
+  .save-bar {
+    position: sticky; bottom: 0; background: var(--paper);
+    border-top: 1px solid var(--line); padding: 1rem 0; margin-top: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .status { font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-faint); }
+  .status.ok { color: var(--accent-ink); }
+  .status.err { color: #a13a2e; }
+  .intro { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 2rem; max-width: 60em; }
+</style>
+</head>
+<body>
+
+<p class="eyebrow">Content editor — local, no login</p>
+<h1 style="font-size: clamp(1.7rem, 4vw, 2.3rem); margin: 0.4rem 0 1rem;">Edit site content</h1>
+<p class="intro">
+  This page edits <strong>People</strong> and <strong>Publications</strong>. (News is written as markdown files in <code>content/news/</code>.)
+  It loads the current content from the <code>data/</code> folder, lets you add, edit, or remove
+  entries, and then lets you download an updated file. Replace the matching file inside
+  <code>data/</code> with the one you downloaded, then upload it to the server the same way you
+  upload any other file. This page never sends anything anywhere on its own — nothing is live until
+  you upload the file yourself.
+</p>
+
+<div class="admin-tabs">
+  <button class="admin-tab active" data-tab="people">People</button>
+  <button class="admin-tab" data-tab="publications">Publications</button>
+</div>
+
+<!-- ================= PEOPLE ================= -->
+<div class="admin-panel active" id="panel-people">
+  <h2>Principal investigator</h2>
+  <div class="entry" id="pi-fields"></div>
+
+  <h2>Current members</h2>
+  <div id="members-list"></div>
+  <button class="add-btn" id="add-member">+ Add a group member</button>
+
+  <h2>Alumni</h2>
+  <div id="alumni-list-edit"></div>
+  <button class="add-btn" id="add-alumnus">+ Add an alumnus/alumna</button>
+
+  <h2>Openings</h2>
+  <div class="entry">
+    <div class="field">
+      <label for="openings-text-field">Openings text</label>
+      <textarea id="openings-text-field"></textarea>
+    </div>
+    <div class="field">
+      <label for="openings-email-field">Contact email</label>
+      <input id="openings-email-field" type="text">
+    </div>
+  </div>
+
+  <div class="save-bar">
+    <button class="btn btn-primary" id="save-people">Download updated people.json</button>
+    <span class="status" id="status-people"></span>
+  </div>
+</div>
+
+<!-- ================= PUBLICATIONS ================= -->
+<div class="admin-panel" id="panel-publications">
+  <h2>Publications</h2>
+  <div id="pubs-list"></div>
+  <button class="add-btn" id="add-pub">+ Add a publication</button>
+
+  <div class="save-bar">
+    <button class="btn btn-primary" id="save-pubs">Download updated publications.json</button>
+    <span class="status" id="status-pubs"></span>
+  </div>
+</div>
+
+<script>
+let peopleData = null, pubsData = null;
+
+/* ---------- tabs ---------- */
+document.querySelectorAll(".admin-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".admin-tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".admin-panel").forEach(p => p.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
+  });
+});
+
+function el(html) {
+  const t = document.createElement("template");
+  t.innerHTML = html.trim();
+  return t.content.firstChild;
+}
+
+function download(filename, obj) {
+  const blob = new Blob([JSON.stringify(obj, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function flashStatus(id, msg, ok) {
+  const s = document.getElementById(id);
+  s.textContent = msg;
+  s.className = "status " + (ok ? "ok" : "err");
+}
+
+/* ---------- People ---------- */
+async function loadPeople() {
+  peopleData = await (await fetch("data/people.json")).json();
+
+  const pi = peopleData.pi;
+  document.getElementById("pi-fields").innerHTML = `
+    <div class="field"><label>Initials (for avatar)</label><input id="pi-initials" value="${pi.initials}"></div>
+    <div class="field"><label>Name</label><input id="pi-name" value="${pi.name}"></div>
+    <div class="field"><label>Photo (file name in static/img/people/, e.g. jane-doe.jpg; blank = initials)</label><input id="pi-photo" value="${pi.photo || ""}"></div>
+    <div class="field"><label>Title</label><input id="pi-title" value="${pi.title}"></div>
+    <div class="field"><label>Bio (short, shown on the People page card)</label><textarea id="pi-bio">${pi.bio}</textarea></div>
+    <div class="field"><label>Profile (longer text for their own page; Markdown OK; falls back to the short bio if empty)</label><textarea id="pi-profile">${pi.profile || ""}</textarea></div>
+    <div class="field"><label>Office</label><input id="pi-office" value="${pi.office}"></div>
+    <div class="field"><label>Email</label><input id="pi-email" value="${pi.email}"></div>
+    <div class="field"><label>ORCID (iD like 0000-0002-1825-0097, or full URL; optional)</label><input id="pi-orcid" value="${pi.orcid || ""}"></div>
+    <div class="field"><label>Google Scholar URL (optional)</label><input id="pi-gscholar" value="${pi.gscholar || pi.scholar || ""}"></div>
+    <div class="field"><label>LinkedIn URL (optional)</label><input id="pi-linkedin" value="${pi.linkedin || ""}"></div>
+  `;
+
+  renderMembers();
+  renderAlumni();
+
+  document.getElementById("openings-text-field").value = peopleData.openings.text;
+  document.getElementById("openings-email-field").value = peopleData.openings.email;
+}
+
+function renderMembers() {
+  const list = document.getElementById("members-list");
+  list.innerHTML = "";
+  peopleData.members.forEach((m, i) => {
+    const row = el(`
+      <div class="entry">
+        <div class="field"><label>Initials</label><input data-i="${i}" data-f="initials" value="${m.initials}"></div>
+        <div class="field"><label>Name</label><input data-i="${i}" data-f="name" value="${m.name}"></div>
+        <div class="field"><label>Photo (file name in static/img/people/, e.g. jane-doe.jpg; blank = initials)</label><input data-i="${i}" data-f="photo" value="${m.photo || ""}"></div>
+        <div class="field"><label>Role</label><input data-i="${i}" data-f="role" value="${m.role}"></div>
+        <div class="field"><label>Research focus</label><input data-i="${i}" data-f="focus" value="${m.focus || ""}"></div>
+        <div class="field"><label>Degree</label><input data-i="${i}" data-f="degree" value="${m.degree || ""}"></div>
+        <div class="field"><label>Bio (Markdown OK)</label><textarea data-i="${i}" data-f="bio">${m.bio || ""}</textarea></div>
+        <div class="field"><label>Email</label><input data-i="${i}" data-f="email" value="${m.email || ""}"></div>
+        <div class="field"><label>ORCID (iD like 0000-0002-1825-0097, or full URL)</label><input data-i="${i}" data-f="orcid" value="${m.orcid || ""}"></div>
+        <div class="field"><label>Google Scholar URL</label><input data-i="${i}" data-f="gscholar" value="${m.gscholar || ""}"></div>
+        <div class="field"><label>LinkedIn URL</label><input data-i="${i}" data-f="linkedin" value="${m.linkedin || ""}"></div>
+        <div class="field"><label>Slug (optional; pins their page URL, e.g. jane-doe)</label><input data-i="${i}" data-f="slug" value="${m.slug || ""}"></div>
+        <div class="row-actions"><button class="btn-small" data-remove="${i}">Remove</button></div>
+      </div>
+    `);
+    row.querySelectorAll("[data-f]").forEach(inp => {
+      inp.addEventListener("input", () => { peopleData.members[i][inp.dataset.f] = inp.value; });
+    });
+    row.querySelector("[data-remove]").addEventListener("click", () => {
+      peopleData.members.splice(i, 1); renderMembers();
+    });
+    list.appendChild(row);
+  });
+}
+document.getElementById("add-member").addEventListener("click", () => {
+  peopleData.members.push({ initials: "??", name: "New Person", role: "Role", photo: "", focus: "", degree: "", bio: "", email: "", orcid: "", gscholar: "", linkedin: "", slug: "" });
+  renderMembers();
+});
+
+function renderAlumni() {
+  const list = document.getElementById("alumni-list-edit");
+  list.innerHTML = "";
+  peopleData.alumni.forEach((line, i) => {
+    const row = el(`
+      <div class="entry" style="display:flex; gap:0.75rem; align-items:center; padding:0.75rem 1rem;">
+        <input data-i="${i}" style="flex:1;" value="${line}">
+        <button class="btn-small" data-remove="${i}">Remove</button>
+      </div>
+    `);
+    row.querySelector("input").addEventListener("input", (e) => { peopleData.alumni[i] = e.target.value; });
+    row.querySelector("[data-remove]").addEventListener("click", () => {
+      peopleData.alumni.splice(i, 1); renderAlumni();
+    });
+    list.appendChild(row);
+  });
+}
+document.getElementById("add-alumnus").addEventListener("click", () => {
+  peopleData.alumni.push("First Last — Degree [Year] → Current position");
+  renderAlumni();
+});
+
+document.getElementById("save-people").addEventListener("click", () => {
+  peopleData.pi = {
+    ...peopleData.pi,   // keep any fields this form doesn't show (e.g. a hand-added "slug")
+    initials: document.getElementById("pi-initials").value,
+    name: document.getElementById("pi-name").value,
+    photo: document.getElementById("pi-photo").value,
+    title: document.getElementById("pi-title").value,
+    bio: document.getElementById("pi-bio").value,
+    profile: document.getElementById("pi-profile").value,
+    office: document.getElementById("pi-office").value,
+    email: document.getElementById("pi-email").value,
+    orcid: document.getElementById("pi-orcid").value,
+    gscholar: document.getElementById("pi-gscholar").value,
+    linkedin: document.getElementById("pi-linkedin").value,
+  };
+  peopleData.openings = {
+    text: document.getElementById("openings-text-field").value,
+    email: document.getElementById("openings-email-field").value,
+  };
+  download("people.json", peopleData);
+  flashStatus("status-people", "Downloaded — move it into data/people.json and upload.", true);
+});
+
+/* ---------- Publications ---------- */
+async function loadPubs() {
+  pubsData = await (await fetch("data/publications.json")).json();
+  renderPubs();
+}
+function renderPubs() {
+  const list = document.getElementById("pubs-list");
+  list.innerHTML = "";
+  pubsData.forEach((p, i) => {
+    const row = el(`
+      <div class="entry">
+        <div class="field"><label>Year</label><input data-i="${i}" data-f="year" value="${p.year}"></div>
+        <div class="field"><label>Authors</label><input data-i="${i}" data-f="authors" value="${p.authors}"></div>
+        <div class="field"><label>Title</label><input data-i="${i}" data-f="title" value="${p.title}"></div>
+        <div class="field"><label>Venue / citation</label><input data-i="${i}" data-f="venue" value="${p.venue}"></div>
+        <div class="row-actions"><button class="btn-small" data-remove="${i}">Remove</button></div>
+      </div>
+    `);
+    row.querySelectorAll("[data-f]").forEach(inp => {
+      inp.addEventListener("input", () => { pubsData[i][inp.dataset.f] = inp.value; });
+    });
+    row.querySelector("[data-remove]").addEventListener("click", () => {
+      pubsData.splice(i, 1); renderPubs();
+    });
+    list.appendChild(row);
+  });
+}
+document.getElementById("add-pub").addEventListener("click", () => {
+  pubsData.unshift({ year: String(new Date().getFullYear()), authors: "", title: "New paper title.", venue: "" });
+  renderPubs();
+});
+document.getElementById("save-pubs").addEventListener("click", () => {
+  download("publications.json", pubsData);
+  flashStatus("status-pubs", "Downloaded — move it into data/publications.json and upload.", true);
+});
+
+/* ---------- init ---------- */
+loadPeople().catch(e => { console.error(e); flashStatus("status-people", "Couldn't load people.json — are you running a local server?", false); });
+loadPubs().catch(e => { console.error(e); flashStatus("status-pubs", "Couldn't load publications.json — are you running a local server?", false); });
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{{ define "main" }}
+<section style="padding-top:3.5rem;">
+  <div class="wrap">
+    <p class="eyebrow"><a href="{{ "/people/" | relURL }}">&larr; People</a></p>
+
+    <div class="profile">
+      <div class="profile-side">
+        {{ partial "avatar.html" (dict "initials" .Params.initials "photo" .Params.photo) }}
+        {{ $orcid := .Params.orcid }}
+        {{ if and $orcid (not (hasPrefix $orcid "http")) }}{{ $orcid = printf "https://orcid.org/%s" $orcid }}{{ end }}
+        {{ if or .Params.email $orcid .Params.gscholar .Params.linkedin .Params.link }}
+        <div class="profile-links">
+          {{ with .Params.email }}<a href="mailto:{{ . }}">Email</a>{{ end }}
+          {{ with $orcid }}<a href="{{ . }}" target="_blank" rel="noopener">ORCID &nearr;</a>{{ end }}
+          {{ with .Params.gscholar }}<a href="{{ . }}" target="_blank" rel="noopener">Google Scholar &nearr;</a>{{ end }}
+          {{ with .Params.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener">LinkedIn &nearr;</a>{{ end }}
+          {{ with .Params.link }}<a href="{{ . }}" target="_blank" rel="noopener">Website &nearr;</a>{{ end }}
+        </div>
+        {{ end }}
+      </div>
+      <div class="profile-body">
+        <p class="role">{{ .Params.role }}</p>
+        <h1 style="font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom:0.6rem;">{{ .Title }}</h1>
+
+        {{ with .Params.detail }}<p class="profile-detail">{{ . }}</p>{{ end }}
+        {{ with .Params.focus }}<p class="profile-detail"><strong>Research focus:</strong> {{ . }}</p>{{ end }}
+        {{ with .Params.degree }}<p class="profile-detail">{{ . }}</p>{{ end }}
+        {{ with .Params.office }}<p class="profile-detail">Office: {{ . }}</p>{{ end }}
+
+        {{ with .Content }}<div class="profile-bio">{{ . }}</div>{{ end }}
+
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}

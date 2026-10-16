@@ -1,0 +1,60 @@
+
+{{ define "main" }}
+<section style="padding-top:3.5rem; padding-bottom:0.5rem;">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:0.5rem;">
+      <div>
+        <p class="eyebrow">Publications</p>
+        <h1 style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom:0;">Papers</h1>
+      </div>
+      <a class="btn btn-ghost" href="{{ .Site.Params.scholarUrl }}" target="_blank" rel="noopener">Full list on Google Scholar</a>
+    </div>
+    <p class="lede">{{ .Params.lede }}</p>
+  </div>
+</section>
+
+<section style="padding-top:0.5rem;">
+  <div class="wrap">
+    {{ $pubs := sort hugo.Data.publications "year" "desc" }}
+    {{ $prevYear := "" }}
+
+    {{ range $i, $p := $pubs }}
+      {{ if ne $p.year $prevYear }}
+        {{ if ne $prevYear "" }}</ul>{{ end }}
+        <p class="pub-year">{{ $p.year }}</p>
+        <ul class="pub-list">
+        {{ $prevYear = $p.year }}
+      {{ end }}
+
+      <li>
+        <div class="pub-citation">
+          {{ with $p.Note }}
+            {{ if ne . "" }}
+              <strong class="pub-category">{{ . }}:</strong>
+            {{ end }}
+          {{ end }}
+
+          <span class="pub-authors">{{ $p.authors }}</span>
+          <strong class="pub-title">{{ $p.title }}</strong>
+          <span class="venue">{{ $p.venue }}</span>
+        </div>
+
+        {{ with $p.DOI }}
+          {{ if ne . "" }}
+            <div class="pub-links">
+              <a
+                class="pub-doi"
+                href="https://doi.org/{{ . }}"
+                target="_blank"
+                rel="noopener"
+              >https://doi.org/{{ . }}</a>
+            </div>
+          {{ end }}
+        {{ end }}
+      </li>
+
+      {{ if eq (add $i 1) (len $pubs) }}</ul>{{ end }}
+    {{ end }}
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,110 @@
+{{/*
+  Generates a profile page for the PI and for each group member from
+  data/people.json, so the admin.html editor stays the single source of truth
+  for who is in the lab.
+
+  URL slug comes from the person's name (e.g. "Jane Doe" -> /people/jane-doe/;
+  accents are stripped via removePathAccents in hugo.toml, so "José" -> "jose").
+  If two people share a name (the placeholder data does), later ones get a
+  numeric suffix (-2, -3, ...). Anyone can set an explicit "slug" field in
+  people.json to pin their URL, which is worth doing once a real profile is
+  public so reordering or renaming never breaks an existing link.
+*/}}
+{{ $pi := hugo.Data.people.pi }}
+{{ $members := hugo.Data.people.members }}
+
+{{/* 0. one flat list: PI first, then members in file order */}}
+{{ $all := slice }}
+{{ with $pi }}
+  {{ $all = $all | append (dict
+      "name" .name
+      "slug" (.slug | default "")
+      "initials" .initials
+      "photo" (.photo | default "")
+      "role" "Principal Investigator"
+      "detail" (.title | default "")
+      "focus" (.focus | default "")
+      "degree" (.degree | default "")
+      "bio" (.profile | default (.bio | default ""))
+      "email" (.email | default "")
+      "link" (.link | default "")
+      "orcid" (.orcid | default "")
+      "gscholar" (.gscholar | default (.scholar | default ""))
+      "linkedin" (.linkedin | default "")
+      "office" (.office | default "")
+      "is_pi" true
+      "order" -1
+  ) }}
+{{ end }}
+{{ range $i, $m := $members }}
+  {{ $all = $all | append (dict
+      "name" $m.name
+      "slug" ($m.slug | default "")
+      "initials" $m.initials
+      "photo" ($m.photo | default "")
+      "role" $m.role
+      "detail" ""
+      "focus" ($m.focus | default "")
+      "degree" ($m.degree | default "")
+      "bio" ($m.bio | default "")
+      "email" ($m.email | default "")
+      "link" ""
+      "orcid" ($m.orcid | default "")
+      "gscholar" ($m.gscholar | default ($m.scholar | default ""))
+      "linkedin" ($m.linkedin | default "")
+      "office" ""
+      "is_pi" false
+      "order" $i
+  ) }}
+{{ end }}
+
+{{/* 1. base slug for every person */}}
+{{ $slugs := slice }}
+{{ range $i, $p := $all }}
+  {{ $s := "" }}
+  {{ if $p.slug }}
+    {{ $s = $p.slug }}
+  {{ else }}
+    {{ $n := lower $p.name }}
+    {{ $n = replace $n "'" "" }}
+    {{ $n = replace $n "’" "" }}
+    {{ $n = replaceRE `[^\p{L}\p{N}]+` "-" $n }}
+    {{ $s = strings.Trim $n "-" }}
+  {{ end }}
+  {{ if not $s }}{{ $s = printf "person-%d" (add $i 1) }}{{ end }}
+  {{ $slugs = $slugs | append $s }}
+{{ end }}
+
+{{/* 2. make them unique, then add one page per person */}}
+{{ range $i, $p := $all }}
+  {{ $slug := index $slugs $i }}
+  {{ $earlier := 0 }}
+  {{ range $o := first $i $slugs }}
+    {{ if eq $o $slug }}{{ $earlier = add $earlier 1 }}{{ end }}
+  {{ end }}
+  {{ if gt $earlier 0 }}{{ $slug = printf "%s-%d" $slug (add $earlier 1) }}{{ end }}
+
+  {{ $page := dict
+    "path" $slug
+    "title" $p.name
+    "params" (dict
+      "initials" $p.initials
+      "photo" $p.photo
+      "role" $p.role
+      "detail" $p.detail
+      "focus" $p.focus
+      "degree" $p.degree
+      "email" $p.email
+      "link" $p.link
+      "orcid" $p.orcid
+      "gscholar" $p.gscholar
+      "linkedin" $p.linkedin
+      "office" $p.office
+      "is_pi" $p.is_pi
+      "order" $p.order
+      "description" (printf "%s — %s, McCormack Lab, UC Berkeley." $p.name $p.role)
+    )
+    "content" (dict "mediaType" "text/markdown" "value" $p.bio)
+  }}
+  {{ $.AddPage $page }}
+{{ end }}

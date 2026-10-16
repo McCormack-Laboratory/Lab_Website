@@ -1,0 +1,57 @@
+{{ define "main" }}
+{{ $data := hugo.Data.people }}
+{{ $piURL := "" }}
+{{ $piPages := where .Pages "Params.is_pi" true }}
+{{ if $piPages }}{{ $piURL = (index $piPages 0).RelPermalink }}{{ end }}
+<section style="padding-top:3.5rem; padding-bottom:1rem;">
+  <div class="wrap">
+    <p class="eyebrow">People</p>
+    <h1 style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom:2rem;">Group members</h1>
+
+    {{ with $data.pi }}
+    <div class="pi-card">
+      {{ partial "avatar.html" (dict "initials" .initials "photo" .photo) }}
+      <div>
+        <p class="role">Principal Investigator</p>
+        <h2 style="margin-bottom:0.3rem;">{{ if $piURL }}<a class="stretched-link" href="{{ $piURL }}">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}</h2>
+        <p style="color:var(--ink-soft); margin-bottom:0.8rem;">{{ .title }}</p>
+        <p style="font-family:var(--font-mono); font-size:1rem; color:var(--ink-soft);">
+          Office: {{ .office }} &nbsp;&middot;&nbsp;
+          <a href="mailto:{{ .email }}">{{ .email }}</a>
+        </p>
+      </div>
+    </div>
+    {{ end }}
+
+    <h3 style="margin-bottom:1.25rem;">Current members</h3>
+    <div class="people-grid">
+      {{ range sort (where .Pages "Params.is_pi" false) "Params.order" }}
+      <a class="person" href="{{ .RelPermalink }}">
+        {{ partial "avatar.html" (dict "initials" .Params.initials "photo" .Params.photo) }}
+        <div class="name">{{ .Title }}</div>
+        <div class="role">{{ .Params.role }}</div>
+      </a>
+      {{ end }}
+    </div>
+
+    <h3 style="margin-bottom:1rem;">Alumni</h3>
+    <ul class="alumni-list">
+      {{ range $data.alumni }}
+      <li>{{ . }}</li>
+      {{ end }}
+    </ul>
+  </div>
+</section>
+
+<section id="openings">
+  <div class="wrap">
+    <div class="callout">
+      <h3>Openings</h3>
+      {{ $text := $data.openings.text }}
+      {{ $email := $data.openings.email }}
+      {{ $linked := replace $text $email (printf "<a href=\"mailto:%s\">%s</a>" $email $email) }}
+      <p>{{ $linked | safeHTML }}</p>
+    </div>
+  </div>
+</section>
+{{ end }}

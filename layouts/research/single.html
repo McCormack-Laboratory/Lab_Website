@@ -1,0 +1,15 @@
+{{ define "main" }}
+<section style="padding-top:3.5rem;">
+  <div class="wrap">
+    <p class="eyebrow"><a href="{{ "/research/" | relURL }}">Research</a></p>
+    <div style="display:grid; grid-template-columns: 4rem 1fr; gap:1.5rem; align-items:start; margin-top:1rem;">
+      {{ partial "lattice.html" (dict "variant" .Params.icon "width" 56 "height" 22) }}
+      <div>
+        <h1 style="font-size: clamp(1.8rem, 4vw, 2.4rem);">{{ .Title }}</h1>
+        <div>{{ .Content }}</div>
+        {{ with .Params.techniques }}<p style="color:var(--ink-soft); font-size:0.92rem;">Representative techniques: {{ . }}.</p>{{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}

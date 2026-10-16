@@ -1,0 +1,15 @@
+{{- /* One news row. Pass: (dict "page" <news page> "summary" true|false)
+       Clickable rules: an article with a body opens its own page; otherwise a
+       `link:` in the front matter goes to that outside URL; otherwise plain text. */ -}}
+{{- $p := .page -}}
+{{- $hasBody := ne (strings.TrimSpace $p.RawContent) "" -}}
+{{- $label := $p.Params.date_label | default ($p.Date | time.Format "Jan 2, 2006") -}}
+<li>
+  <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $label }}</time>
+  <div>
+    {{ if $hasBody }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>
+    {{ else if $p.Params.link }}<a href="{{ $p.Params.link }}" target="_blank" rel="noopener">{{ $p.Title }}</a>
+    {{ else }}<span class="news-title">{{ $p.Title }}</span>{{ end }}
+    {{ if and .summary $p.Params.summary }}<p class="news-summary">{{ $p.Params.summary }}</p>{{ end }}
+  </div>
+</li>

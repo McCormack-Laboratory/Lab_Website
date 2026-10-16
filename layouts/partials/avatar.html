@@ -1,0 +1,8 @@
+{{- /* Avatar square: the person's photo if set, otherwise their initials.
+       photo = a filename in static/img/people/ (e.g. "jane-doe.jpg") or a full https:// URL. */ -}}
+{{- $photo := .photo | default "" -}}
+{{- $src := "" -}}
+{{- if $photo -}}
+  {{- if or (hasPrefix $photo "http") (hasPrefix $photo "/") -}}{{- $src = $photo -}}{{- else -}}{{- $src = printf "img/people/%s" $photo | relURL -}}{{- end -}}
+{{- end -}}
+<div class="avatar">{{ if $src }}<img src="{{ $src }}" alt="" loading="lazy">{{ else }}{{ .initials }}{{ end }}</div>

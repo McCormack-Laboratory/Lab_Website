@@ -1,0 +1,35 @@
+{{ define "main" }}
+<section style="padding-top:3.5rem;">
+  <div class="wrap">
+    <p class="eyebrow">Contact</p>
+    <h1 style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom:2.5rem;">Get in touch!</h1>
+
+    <div class="contact-grid">
+      <div>
+        <div class="address-block">
+          <strong>Mailing address:</strong>
+          {{ range .Params.address_lines }}{{ . }}<br>{{ end }}
+
+          <br><strong>Email:</strong>
+          <a href="mailto:{{ .Params.email }}">{{ .Params.email }}</a>
+        </div>
+
+        <div class="contact-notes">
+          <p>{{ .Params.prospective_note | markdownify }}</p>
+          <p>{{ .Params.press_note | markdownify }}</p>
+        </div>
+      </div>
+
+      <div>
+        {{ with .Params.image }}
+        {{ $src := . }}{{ if not (or (hasPrefix $src "http") (hasPrefix $src "/")) }}{{ $src = printf "img/%s" $src | relURL }}{{ end }}
+        <figure class="contact-figure">
+          <img src="{{ $src }}" alt="{{ $.Params.image_alt }}" loading="lazy">
+          {{ with $.Params.image_caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+        </figure>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
